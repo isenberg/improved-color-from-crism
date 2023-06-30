@@ -15,6 +15,8 @@ White surfaces like northern polar cap snow is expected to show a flat I/F spect
 
 For the improved calibration, the spectrum of white snow surfaces extracted from existing CRISM VNIR if*mtr3 images needs to be manually extraced with http://crism.jhuapl.edu/JCAT and exported from there as `mtrdr_whiteflat.csv`. It will be loaded by crism.py.
 
+![JCAT screenshot: extractiong of the whiteflat data at a location showing white snow in frt000128f3_07_if165j_mtr3](frt000128f3_07_if165j_mtr3_spectrum_snow.png)
+
 The image-viewer's illuminant is changed from D65 to the more common D55 of current screens.
 
 Example images showing white surface which can be used to extract the mtrdr_whiteflat.csv from:
