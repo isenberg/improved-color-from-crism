@@ -1,3 +1,29 @@
+# Forked https://github.com/AsterAphelion/color-from-crism limited to VIS processing
+# with improved instrument calibration for CRISM VNIR 362nm - 1053nm.
+# The spectrum of map-projected targeted reduced data records (*if*mtr3.lbl/img pairs)
+# in the VNIR range shows an unexplainable linear gradient reducing the reflectance (I/F)
+# of plain white surface by a factor of 2 to 3 at the short wavelength VNIR spectrum end at 362nm
+# compared to the long wavelength VNIR spectrum end at 1053nm.
+# White surfaces like northern polar cap snow is expected to show a flat I/F spectrum,
+# as can be verified by telescope observations form Earth or from other cameras in Mars orbit.
+#
+# For the improved calibration, the spectrum of white snow surfaces extracted from
+# existing CRISM VNIR if*mtr3 images is extraced with http://crism.jhuapl.edu/JCAT as 
+# mtrdr_whiteflat.csv and loaded by crism.py.
+#
+# The image-viewer's illuminant is changed from D65 to the more common D55 of current screens.
+#
+# Example images shows white surface:
+# frt000128f3_07_if165j_mtr3
+#
+# Example usage to create calibrated output file hrl000095c7_07_if182j_mtr3_VIS.png:
+# python3 crism.py mtrdr_to_color --file=hrl000095c7_07_if182j_mtr3.lbl --name=hrl000095c7_07_if182j_mtr3
+#
+# Required input files available on https://ode.rsl.wustl.edu/mars/mapsearch
+# as layers -> Derived Map-projected MTRDR: *if*_mtr3.lbl, *if*_mtr3.img
+#
+# This calibration is not yet complete, but already shows an improvement in the expected direction.
+
 import rasterio
 import numpy as np
 import spectres as spec
@@ -71,21 +97,24 @@ class ColourSystem:
         xyz = self.spec_to_xyz(spec)
         return self.xyz_to_rgb(xyz, out_fmt)
 
+illuminant_D50 = xyz_from_xy(0.3457, 0.3585)
+illuminant_D55 = xyz_from_xy(0.3324, 0.3474)
 illuminant_D65 = xyz_from_xy(0.3127, 0.3291)
+illuminant_D75 = xyz_from_xy(0.2990, 0.3149)
 cs_hdtv = ColourSystem(red=xyz_from_xy(0.67, 0.33),
                        green=xyz_from_xy(0.21, 0.71),
                        blue=xyz_from_xy(0.15, 0.06),
-                       white=illuminant_D65)
+                       white=illuminant_D55)
 
 cs_smpte = ColourSystem(red=xyz_from_xy(0.63, 0.34),
                         green=xyz_from_xy(0.31, 0.595),
                         blue=xyz_from_xy(0.155, 0.070),
-                        white=illuminant_D65)
+                        white=illuminant_D55)
 
 cs_srgb = ColourSystem(red=xyz_from_xy(0.64, 0.33),
                        green=xyz_from_xy(0.30, 0.60),
                        blue=xyz_from_xy(0.15, 0.06),
-                       white=illuminant_D65)
+                       white=illuminant_D55)
 
 
 ##Defining a few internal functions to help us on our journey.
@@ -277,6 +306,26 @@ def color_from_cube(cube, cs, mode="raw"):
     
     weights = cs.cmf.copy()
     
+    # CRISM VNIR 362nm - 1053nm calibration correction,
+    # quantized into crism.py internal convention of starting at 380nm in 5 nm intervals.
+    # Based on white surface spectrum saved saved with http://crism.jhuapl.edu/JCAT
+    # for example from north polar snow surfaces in frt000128f3_07_if165j_mtr3.img.
+    w = 380
+    dw = 5
+    whiteflatraw = np.genfromtxt("mtrdr_whiteflat.csv", delimiter=",")
+    whiteflatraw = whiteflatraw[:, [1,2]]
+    whiteflatraw_bands = whiteflatraw[:, 0]
+    cube_bands = cube.shape[2]
+    whiteflat = np.zeros(cube_bands, dtype=float)
+    whiteflatraw_max = 0
+    for i in range(0, cube_bands):
+        whiteflat[i] = whiteflatraw[find_band(whiteflatraw_bands, w)][1]
+        whiteflatraw_max = max(whiteflat[i], whiteflatraw_max)
+        w = w + dw
+    whiteflat = whiteflatraw_max / whiteflat
+    for i in range(0, cube_bands):
+        cube[:,:,i] = whiteflat[i] * cube[:,:,i]
+
     blu_lumin = calculate_luminance(weights[:,0], cube)
     grn_lumin = calculate_luminance(weights[:,1], cube)
     red_lumin = calculate_luminance(weights[:,2], cube)
@@ -357,8 +406,8 @@ def mtrdr_to_color(file, name, standard_params=True, new_params=None):
     )
     
     if standard_params == True:
-        process_list = ["VIS", "FAL", "FEM", "MAF", "PHY", "FAR", "CAR"]
-        mode_list = ["raw", "raw", "wb", "wb", "wb", "wb", "wb"]
+        process_list = ["VIS"]
+        mode_list = ["raw"]
         
         for param, mode in zip(process_list, mode_list):
 
