@@ -1,9 +1,9 @@
-# Color from CRISM
+# Improved Color from CRISM
 Python script to create color images replicating human color vision from date collected by CRISM VNIR visual light multispectral imaging spectrometer on board of Mars Reconnaissance Orbiter (MRO).
 
 ## Description
 
-This Python package converts a Compact Reconnaissance Imaging Spectrometer for Mars (CRISM) data cube to various color spaces, including human perceptual color and emulated spacecraft filters. It integrates across a given wavelength range using the CIE color matching functions (for human perceptual color) or spacecraft filter functions (for spacecraft color) before conversion into sRGB color space. Currently, this package is only capable of processing Map-projected Targed Reduced Data Records (MTRDR), which represent the highest level of processing by the CRISM team. MTRDR images are map-projected, have the instruments 3 detectors joined into a single image, and are processed to reduce signal from atmospheric features (water ice/dust) and instrumental artifacts.
+This Python package converts a Compact Reconnaissance Imaging Spectrometer for Mars (CRISM) data cube to the color space of human perceptual color. It integrates across a given wavelength range using the CIE color matching functions (for human perceptual color) or spacecraft filter functions (for spacecraft color) before conversion into sRGB color space. Currently, this package is only capable of processing Map-projected Targed Reduced Data Records (MTRDR), which represent the highest level of processing by the CRISM team. MTRDR images are map-projected, have the instruments 3 detectors joined into a single image, and are processed to reduce signal from atmospheric features (water ice/dust) and instrumental artifacts.
 
 This code was developed to aid visualization of hyperspectral imaging data. It is free for personal use and academic presentations and publications. Please provide an acknowledgement in your visualization/presentation/publication when using this work.
 
@@ -24,7 +24,7 @@ Example images showing white surface which can be used to extract the mtrdr_whit
 
 ```
 git clone https://github.com/isenberg/improved-color-from-crism.git
-python3 -m pip install --user spectres rasterio fire
+python3 -m pip install --user numpy attrs spectres rasterio fire
 cd improved-color-from-crism
 python3 crism.py mtrdr_to_color --file=hrl000095c7_07_if182j_mtr3.lbl --name=hrl000095c7_07_if182j_mtr3
 open hrl000095c7_07_if182j_mtr3_VIS.png
