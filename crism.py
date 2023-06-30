@@ -304,8 +304,12 @@ def color_from_cube(cube, cs, mode="raw"):
     #three-dimensional than it is to add a dimensionality argument to calculate_luminance() and specify
     #the dimensionality of the data every time.
     
-    weights = cs.cmf.copy()
-    
+    # as humans are viewing the image,
+    # no artifical simulation of the human vision system via CIE cmf is needed.
+    # Evalulating results with flat cmf replacement.
+    #weights = cs.cmf.copy()
+    weights = np.ones([61,3])
+
     # CRISM VNIR 362nm - 1053nm calibration correction,
     # quantized into crism.py internal convention of starting at 380nm in 5 nm intervals.
     # Based on white surface spectrum saved saved with http://crism.jhuapl.edu/JCAT
