@@ -31,11 +31,16 @@ python3 crism.py mtrdr_to_color --file=hrl000095c7_07_if182j_mtr3.lbl --name=hrl
 open hrl000095c7_07_if182j_mtr3_VIS.png
 ```
 
+To produce PNG files from all `*if*mtr3` images in a specific directory, written into the same directory:
+```
+./crismcal.sh DIRECTORY
+```
+
 ### For Human Perceptual Color
 
 The `mtrdr_to_color()` function uses the CIE color matching functions as a close approximation to standard human vision. Additional keyword arguments can be used to apply the matching function to a user-specified wavelength range, emulating the standard human visual response for that wavelength range. 
 
-User input: `python crism.py mtrdr_to_color --file="[cube_name].lbl" --name="[output_name]"`. The standard outputs from this function include the following:
+User input: `python3 crism.py mtrdr_to_color --file="[cube_name].lbl" --name="[output_name]"`. The standard outputs from this function include the following:
 
 - 'VIS' - CIE human visual response, covering the wavelength range from 380 - 780 nm
 
