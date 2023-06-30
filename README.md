@@ -13,7 +13,7 @@ The spectrum of map-projected targeted reduced data records (`*if*mtr3.lbl/img` 
 
 White surfaces like northern polar cap snow is expected to show a flat I/F spectrum, as can be verified by telescope observations form Earth or from other cameras in Mars orbit.
 
-For the improved calibration, the spectrum of white snow surfaces extracted from existing CRISM VNIR if*mtr3 images needs to be manually extraced with http://crism.jhuapl.edu/JCAT and exported from there as `matching_functions/mtrdr_whiteflat.csv`. It will be loaded by crism.py.
+For the improved calibration, the spectrum of white snow surfaces extracted from existing CRISM VNIR if*mtr3 images needs to be manually extraced with http://crism.jhuapl.edu/JCAT and exported from there as `mtrdr_whiteflat.csv`. It will be loaded by crism.py.
 
 The image-viewer's illuminant is changed from D65 to the more common D55 of current screens.
 
@@ -26,6 +26,7 @@ Example images showing white surface which can be used to extract the mtrdr_whit
 git clone https://github.com/isenberg/improved-color-from-crism.git
 python3 -m pip install --user numpy attrs spectres rasterio fire
 cd improved-color-from-crism
+ln -s frt000128f3_07_if165j_mtr3_spectrum_snow.csv mtrdr_whiteflat.csv
 python3 crism.py mtrdr_to_color --file=hrl000095c7_07_if182j_mtr3.lbl --name=hrl000095c7_07_if182j_mtr3
 open hrl000095c7_07_if182j_mtr3_VIS.png
 ```
