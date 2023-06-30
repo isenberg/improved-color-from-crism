@@ -3,11 +3,11 @@ Python script to create color images replicating human color vision from date co
 
 ## Description
 
-This Python package converts a Compact Reconnaissance Imaging Spectrometer for Mars (CRISM) data cube to the color space of human perceptual color. It integrates across a given wavelength range using the CIE color matching functions (for human perceptual color) or spacecraft filter functions (for spacecraft color) before conversion into sRGB color space. Currently, this package is only capable of processing Map-projected Targed Reduced Data Records (MTRDR), which represent the highest level of processing by the CRISM team. MTRDR images are map-projected, have the instruments 3 detectors joined into a single image, and are processed to reduce signal from atmospheric features (water ice/dust) and instrumental artifacts.
+This Python package converts a Compact Reconnaissance Imaging Spectrometer for Mars (CRISM) data cube to the color space of human perceptual color. It integrates multispectral data across the visual light wavelength range and converts it into the sRGB color space. Currently, this package is only capable of processing Map-projected Targed Reduced Data Records (MTRDR), which represent the highest level of processing by the CRISM team. MTRDR images are map-projected, have the instruments 3 detectors joined into a single image, and are processed to reduce signal from atmospheric features (water ice/dust) and instrumental artifacts.
 
 This code was developed to aid visualization of hyperspectral imaging data. It is free for personal use and academic presentations and publications. Please provide an acknowledgement in your visualization/presentation/publication when using this work.
 
-This forked version from https://github.com/AsterAphelion/color-from-crism is limited to CRISM VNIR (visual light, VIS) processing and adds an improved instrument calibration for CRISM VNIR 362nm - 1053nm.
+This forked version from https://github.com/AsterAphelion/color-from-crism is limited to CRISM VNIR (visual light, VIS) processing and adds an improved instrument calibration for CRISM VNIR 362nm - 1053nm to approach true color representation for humans.
 
 The spectrum of map-projected targeted reduced data records (`*if*mtr3.lbl/img` pairs) in the VNIR range shows an unexplainable linear gradient reducing the reflectance (I/F) of plain white surface by a factor of 2 to 3 at the short wavelength VNIR spectrum end at 362nm compared to the long wavelength VNIR spectrum end at 1053nm.
 
@@ -40,13 +40,11 @@ To produce PNG files from all `*if*mtr3` images in a specific directory, written
 
 ### For Human Perceptual Color
 
-The `mtrdr_to_color()` function uses the CIE color matching functions as a close approximation to standard human vision. Additional keyword arguments can be used to apply the matching function to a user-specified wavelength range, emulating the standard human visual response for that wavelength range. 
+The `mtrdr_to_color()` function uses integrates the CRISM VNIR multispectral data in its usually about 80 6.5nm wide bands into an sRGB image.
 
 User input: `python3 crism.py mtrdr_to_color --file="[cube_name].lbl" --name="[output_name]"`. The standard outputs from this function include the following:
 
-- 'VIS' - CIE human visual response, covering the wavelength range from 380 - 780 nm
-
-The following output options for IR to visual light transformation, available in the original code are disabled in this fork: FAL, FEM, MAF, PHY, FAR, CAR
+- 'VIS' - sRGB true color image, covering the wavelength range from 380 - 780 nm
 
 Example usage to create calibrated output file `hrl000095c7_07_if182j_mtr3_VIS.png`:
 ```
@@ -61,4 +59,4 @@ Required input files available on https://ode.rsl.wustl.edu/mars/mapsearch as la
 ## Acknowledgements
 Original code: https://github.com/AsterAphelion/color-from-crism 
 
-This code makes heavy use of the 'ColourSystem' class [described on the SciPython blog](https://scipython.com/blog/converting-a-spectrum-to-a-colour/). It also uses the [SpectRes package](https://spectres.readthedocs.io/en/latest/) to convert CIE matching functions to different wavelength ranges. 
+This code makes heavy use of the 'ColourSystem' class [described on the SciPython blog](https://scipython.com/blog/converting-a-spectrum-to-a-colour/). The original code also used the [SpectRes package](https://spectres.readthedocs.io/en/latest/) to convert CIE matching functions to different wavelength ranges.
