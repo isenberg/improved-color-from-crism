@@ -1,5 +1,5 @@
 # Color from CRISM
-Python scripts to create color images replicating human color vision from date collected by CRISM VNIR visual light multispectral imaging spectrometer on board of Mars Reconnaissance Orbiter (MRO).
+Python script to create color images replicating human color vision from date collected by CRISM VNIR visual light multispectral imaging spectrometer on board of Mars Reconnaissance Orbiter (MRO).
 
 ## Description
 
@@ -9,24 +9,26 @@ This code was developed to aid visualization of hyperspectral imaging data. It i
 
 This forked version from https://github.com/AsterAphelion/color-from-crism is limited to CRISM VNIR (visual light, VIS) processing and adds an improved instrument calibration for CRISM VNIR 362nm - 1053nm.
 
-The spectrum of map-projected targeted reduced data records (*if*mtr3.lbl/img pairs) in the VNIR range shows an unexplainable linear gradient reducing the reflectance (I/F) of plain white surface by a factor of 2 to 3 at the short wavelength VNIR spectrum end at 362nm compared to the long wavelength VNIR spectrum end at 1053nm.
+The spectrum of map-projected targeted reduced data records (`*if*mtr3.lbl/img` pairs) in the VNIR range shows an unexplainable linear gradient reducing the reflectance (I/F) of plain white surface by a factor of 2 to 3 at the short wavelength VNIR spectrum end at 362nm compared to the long wavelength VNIR spectrum end at 1053nm.
 
 White surfaces like northern polar cap snow is expected to show a flat I/F spectrum, as can be verified by telescope observations form Earth or from other cameras in Mars orbit.
 
-For the improved calibration, the spectrum of white snow surfaces extracted from existing CRISM VNIR if*mtr3 images is extraced with http://crism.jhuapl.edu/JCAT as matching_functions/mtrdr_whiteflat.csv and loaded by crism.py.
+For the improved calibration, the spectrum of white snow surfaces extracted from existing CRISM VNIR if*mtr3 images needs to be manually extraced with http://crism.jhuapl.edu/JCAT and exported from there as `matching_functions/mtrdr_whiteflat.csv`. It will be loaded by crism.py.
 
 The image-viewer's illuminant is changed from D65 to the more common D55 of current screens.
 
-Example images shows white surface:
+Example images showing white surface which can be used to extract the mtrdr_whiteflat.csv from:
 * frt000128f3_07_if165j_mtr3
 
 ## Setup and Use
 
+```
 git clone https://github.com/isenberg/improved-color-from-crism.git
 python3 -m pip install --user spectres rasterio fire
 cd improved-color-from-crism
 python3 crism.py mtrdr_to_color --file=hrl000095c7_07_if182j_mtr3.lbl --name=hrl000095c7_07_if182j_mtr3
 open hrl000095c7_07_if182j_mtr3_VIS.png
+```
 
 ### For Human Perceptual Color
 
@@ -38,10 +40,12 @@ User input: `python crism.py mtrdr_to_color --file="[cube_name].lbl" --name="[ou
 
 The following output options for IR to visual light transformation, available in the original code are disabled in this fork: FAL, FEM, MAF, PHY, FAR, CAR
 
-Example usage to create calibrated output file 'hrl000095c7_07_if182j_mtr3_VIS.png':
-'''python3 crism.py mtrdr_to_color --file=hrl000095c7_07_if182j_mtr3.lbl --name=hrl000095c7_07_if182j_mtr3'''
+Example usage to create calibrated output file `hrl000095c7_07_if182j_mtr3_VIS.png`:
+```
+python3 crism.py mtrdr_to_color --file=hrl000095c7_07_if182j_mtr3.lbl --name=hrl000095c7_07_if182j_mtr3
+```
 
-Required input files available on https://ode.rsl.wustl.edu/mars/mapsearch as layers -> Derived Map-projected MTRDR: *if*_mtr3.lbl, *if*_mtr3.img.
+Required input files available on https://ode.rsl.wustl.edu/mars/mapsearch as layers -> Derived Map-projected MTRDR: `*if*_mtr3.lbl`, `*if*_mtr3.img`
 
 ## Requirements
 - requirements.txt
