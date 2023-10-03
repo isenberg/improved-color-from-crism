@@ -1,13 +1,14 @@
 # Improved Color from CRISM
-Python script to create color images replicating human color vision from date collected by CRISM VNIR visual light multispectral imaging spectrometer on board of Mars Reconnaissance Orbiter (MRO).
+Python script to create true color images replicating human color vision from date collected by CRISM VNIR visual light multispectral imaging spectrometer on board of Mars Reconnaissance Orbiter (MRO).
+The original code this modified version is based on was not producing correct true color images. That statement can be verified by looking at Mars with a backyard telescope and check if the polar ice caps appear white or not and whether the soil color in the produced image matches the observed color through the telescope.
 
 ## Description
 
 This Python package converts a Compact Reconnaissance Imaging Spectrometer for Mars (CRISM) data cube to the color space of human perceptual color. It integrates multispectral data across the visual light wavelength range and converts it into the sRGB color space. Currently, this package is only capable of processing Map-projected Targed Reduced Data Records (MTRDR), which represent the highest level of processing by the CRISM team. MTRDR images are map-projected, have the instruments 3 detectors joined into a single image, and are processed to reduce signal from atmospheric features (water ice/dust) and instrumental artifacts.
 
-This code was developed to aid visualization of hyperspectral imaging data. It is free for personal use and academic presentations and publications. Please provide an acknowledgement in your visualization/presentation/publication when using this work.
+This code was developed to create true color visualization of hyperspectral MRI CRISM imaging data. It is free for personal use and academic presentations and publications. Please provide an acknowledgement in your visualization/presentation/publication to the author of is modified version and the original author's code of https://github.com/AsterAphelion/color-from-crism when using this work.
 
-This forked version from https://github.com/AsterAphelion/color-from-crism is limited to CRISM VNIR (visual light, VIS) processing and adds an improved instrument calibration for CRISM VNIR 362nm - 1053nm to approach true color representation for humans.
+This forked version is based on the code from https://github.com/AsterAphelion/color-from-crism and is limited to CRISM VNIR (visual light, VIS) processing and adds an improved instrument calibration for CRISM VNIR 362nm - 1053nm to approach true color representation for humans.
 
 The spectrum of map-projected targeted reduced data records (`*if*mtr3.lbl/img` pairs) in the VNIR range shows an unexplainable linear gradient reducing the reflectance (I/F) of plain white surface by a factor of 2 to 3 at the short wavelength VNIR spectrum end at 362nm compared to the long wavelength VNIR spectrum end at 1053nm.
 
