@@ -1,6 +1,6 @@
 # Improved Color from CRISM
-Python script to create true color images replicating human color vision from date collected by CRISM VNIR visual light multispectral imaging spectrometer on board of Mars Reconnaissance Orbiter (MRO).
-The original code this modified version is based on was not producing correct true color images. That statement can be verified by looking at Mars with a backyard telescope and check if the polar ice caps appear white or not and whether the soil color in the produced image matches the observed color through the telescope.
+Python script to create true color images replicating human color vision from data collected by CRISM VNIR visual light multispectral imaging spectrometer on board of Mars Reconnaissance Orbiter (MRO).
+The original code this modified version is based on was not producing correct true color images. The correct color calibration in the visual light range can be verified by looking through a telescope at Mars and comparing the visually observed polar ice caps color with the human vision rendered image created by the software. Both should show a white sunlight spectrum during normal clear weather conditions.
 
 ## Description
 
@@ -10,7 +10,7 @@ This code was developed to create true color visualization of hyperspectral MRI 
 
 This forked version is based on the code from https://github.com/AsterAphelion/color-from-crism and is limited to CRISM VNIR (visual light, VIS) processing and adds an improved instrument calibration for CRISM VNIR 362nm - 1053nm to approach true color representation for humans.
 
-The spectrum of map-projected targeted reduced data records (`*if*mtr3.lbl/img` pairs) in the VNIR range shows an unexplainable linear gradient reducing the reflectance (I/F) of plain white surface by a factor of 2 to 3 at the short wavelength VNIR spectrum end at 362nm compared to the long wavelength VNIR spectrum end at 1053nm.
+The spectrum of map-projected targeted reduced data records (`*if*mtr3.lbl/img` pairs) in the VNIR range shows an unexplainable linear gradient reducing the reflectance (I/F) of plain white surface by a factor of 2 to 3 at the short wavelength VNIR spectrum end at 362nm compared to the long wavelength VNIR spectrum end at 1053nm. That gradient is caused by the missing calibration of the mtr3 files where the socalled volcano scan calibration is only applied to the IR range and not the VIS range.
 
 White surfaces like northern polar cap snow is expected to show a flat I/F spectrum, as can be verified by telescope observations form Earth or from other cameras in Mars orbit.
 
