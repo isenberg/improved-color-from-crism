@@ -23,6 +23,7 @@ The image-viewer's illuminant is changed from D65 to the more common D55 of curr
 Example images showing white surface which can be used to extract the mtrdr_whiteflat.csv from:
 * frt000128f3_07_if165j_mtr3
 
+A few images created with this tool are used in my 2023 Mars Society presentation _Modern Martian Mysteries_: https://researchgate.net/publication/374535219_Modern_Martian_Mysteries
 ## Setup and Use
 
 ```
